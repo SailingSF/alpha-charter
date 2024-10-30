@@ -1,101 +1,150 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    
+    try {
+      // TODO: Implement your newsletter subscription API endpoint
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+              <div className="sm:text-center lg:text-left">
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                  <span className="block">Your Gateway to</span>
+                  <span className="block text-blue-600">Financial Insights</span>
+                </h1>
+                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  Get ahead of the market with our expert analysis, curated insights, and actionable investment strategies delivered straight to your inbox.
+                </p>
+              </div>
+            </main>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* Newsletter Subscription Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-blue-700 rounded-2xl shadow-xl overflow-hidden">
+          <div className="px-6 py-12 sm:px-12 lg:px-16">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+                Join Our Newsletter
+              </h2>
+              <p className="mt-4 text-lg leading-6 text-blue-100">
+                Subscribe now and receive our weekly financial insights completely free.
+              </p>
+              <form onSubmit={handleSubmit} className="mt-8 sm:flex justify-center">
+                <div className="min-w-0 flex-1">
+                  <label htmlFor="email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    className="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="block w-full py-3 px-6 rounded-md shadow bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 disabled:opacity-75"
+                  >
+                    {status === 'sending' ? 'Subscribing...' : 'Subscribe Now'}
+                  </button>
+                </div>
+              </form>
+              
+              {/* Status Messages */}
+              {status === 'success' && (
+                <p className="mt-4 text-sm text-blue-100">
+                  Thank you for subscribing! Please check your email to confirm your subscription.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="mt-4 text-sm text-red-200">
+                  Oops! Something went wrong. Please try again later.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="text-center">
+            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <h3 className="mt-6 text-lg font-medium text-gray-900">Market Analysis</h3>
+            <p className="mt-2 text-base text-gray-500">
+              Deep dive into market trends and expert analysis of global financial markets.
+            </p>
+          </div>
+
+          <div className="text-center">
+            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="mt-6 text-lg font-medium text-gray-900">Timely Updates</h3>
+            <p className="mt-2 text-base text-gray-500">
+              Get real-time insights and breaking news that impacts your investments.
+            </p>
+          </div>
+
+          <div className="text-center">
+            <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <h3 className="mt-6 text-lg font-medium text-gray-900">Investment Strategies</h3>
+            <p className="mt-2 text-base text-gray-500">
+              Actionable investment strategies and portfolio management tips.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
