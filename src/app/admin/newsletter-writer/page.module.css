@@ -1,0 +1,150 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.newsletterContainer {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.error {
+    color: #ff4444;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #ffe5e5;
+}
+
+.newsletterSelect {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.idInput {
+    margin: 1rem 0;
+}
+
+.numberInput {
+    padding: 0.5rem;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.topicForm {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.topicForm input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button {
+    padding: 0.8rem 1.5rem;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.jobIdDisplay {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.copyButton {
+    padding: 0.3rem 0.8rem;
+    background: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.loadingMessage {
+    text-align: center;
+    color: #666;
+    margin: 1rem 0;
+}
+
+.previewContainer {
+    margin: 2rem 0;
+}
+
+.preview {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.editContainer {
+    margin: 2rem 0;
+}
+
+.htmlEditor {
+    width: 100%;
+    min-height: 300px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.feedbackForm {
+    margin: 2rem 0;
+}
+
+.feedbackInput {
+    width: 100%;
+    min-height: 100px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sendControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sendControls label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+} 

@@ -1,0 +1,74 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.navigation {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0051b3;
+}
+
+.error {
+    color: red;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: #ffebee;
+    border-radius: 4px;
+}
+
+.addSubscriber {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.addSubscriber form {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.addSubscriber input,
+.addSubscriber select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.subscriberList table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.subscriberList th,
+.subscriberList td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.subscriberList th {
+    background-color: #f5f5f5;
+} 
