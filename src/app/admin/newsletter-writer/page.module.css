@@ -139,12 +139,25 @@
 
 .sendControls {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 .sendControls label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-} 
+}
+
+.emailOverride {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 60px;
+    font-size: 14px;
+    resize: vertical;
+}
+  

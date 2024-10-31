@@ -16,6 +16,7 @@ export default function AdminNewsletter() {
     const [pollingInterval, setPollingInterval] = useState(null);
     const [newsletterId, setNewsletterId] = useState('');
     const [isSending, setIsSending] = useState(false);
+    const [overrideEmails, setOverrideEmails] = useState('');
 
     // Replace the token state with this:
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
@@ -208,7 +209,7 @@ export default function AdminNewsletter() {
         }
     };
 
-    // Update sendNewsletter function with loading state and correct endpoint
+    // Update sendNewsletter function to include override_emails
     const sendNewsletter = async () => {
         if (!newsletterId) {
             setError('No newsletter selected to send');
@@ -225,7 +226,8 @@ export default function AdminNewsletter() {
                 },
                 body: JSON.stringify({ 
                     newsletter_id: newsletterId,
-                    test_mode: testMode 
+                    test_mode: testMode,
+                    ...(overrideEmails && { override_emails: overrideEmails })
                 }),
             });
             
@@ -234,6 +236,7 @@ export default function AdminNewsletter() {
             const data = await response.json();
             alert(testMode ? 'Test newsletter sent!' : 'Newsletter sent successfully!');
             setError('');
+            setOverrideEmails(''); // Clear the override emails after successful send
         } catch (err) {
             setError('Sending failed: ' + err.message);
         } finally {
@@ -367,6 +370,12 @@ export default function AdminNewsletter() {
                                         />
                                         Test Mode
                                     </label>
+                                    <textarea
+                                        value={overrideEmails}
+                                        onChange={(e) => setOverrideEmails(e.target.value)}
+                                        placeholder="Optional: Override recipient emails (comma-separated)"
+                                        className={styles.emailOverride}
+                                    />
                                     <button 
                                         onClick={sendNewsletter} 
                                         className={styles.button}
