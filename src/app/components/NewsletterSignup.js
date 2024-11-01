@@ -39,7 +39,7 @@ export default function NewsletterSignup() {
               Join Our Smart Newsletter
             </h2>
             <p className="mt-4 text-lg leading-6 text-blue-200">
-              Subscribe now to receive personalized financial insights and get answers to your investment questions.
+              Subscribe now to receive financial insights and get answers to your investment questions, all through your email, powered by AI.
             </p>
             <form onSubmit={handleSubmit} className="mt-8 sm:flex justify-center">
               <div className="min-w-0 flex-1">
