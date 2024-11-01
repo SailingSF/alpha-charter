@@ -11,7 +11,7 @@ export default function NewsletterSignup() {
     setStatus('sending');
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribers/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/subscribe/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
