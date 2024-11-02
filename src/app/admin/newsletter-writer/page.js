@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import styles from './page.module.css';
-
+import NewsletterPreview from '@/app/components/NewsletterPreview';
 
 export default function AdminNewsletter() {
     const [topic, setTopic] = useState('');
@@ -255,140 +256,152 @@ export default function AdminNewsletter() {
     }, [pollingInterval]);
 
     return (
-        <div className={styles.container}>
-            <div className={styles.newsletterContainer}>
+        <div className={styles.pageContainer}>
+            <nav className={styles.navbar}>
+                <Link href="/admin" className={styles.navLink}>← Back to Admin</Link>
+                <Link href="/admin/subscribers" className={styles.navLink}>Manage Subscribers</Link>
+            </nav>
+
+            <main className={styles.container}>
                 <div className={styles.header}>
                     <h1>Newsletter Management</h1>
-                </div>
-                
-                {error && <div className={styles.error}>{error}</div>}
-                
-                <div className={styles.newsletterSelect}>
-                    <h3>Load Existing Newsletter</h3>
-                    <div className={styles.idInput}>
-                        <input
-                            type="number"
-                            placeholder="Enter Newsletter ID"
-                            min="1"
-                            onChange={(e) => e.target.value && fetchNewsletterById(e.target.value)}
-                            className={styles.numberInput}
-                        />
-                    </div>
-                    <p>- or -</p>
+                    {error && <div className={styles.error}>{error}</div>}
                 </div>
 
-                <form onSubmit={generateDraft} className={styles.topicForm}>
-                    <input
-                        type="text"
-                        value={topic}
-                        onChange={(e) => setTopic(e.target.value)}
-                        placeholder="Enter newsletter topic"
-                        required
-                    />
-                    <button 
-                        type="submit" 
-                        className={styles.button} 
-                        disabled={isPolling}
-                    >
-                        {isPolling ? 'Generating...' : 'Generate Draft'}
-                    </button>
-                </form>
+                <div className={styles.topControls}>
+                    <section className={styles.section}>
+                        <h2>Load or Create Newsletter</h2>
+                        <div className={styles.newsletterSelect}>
+                            <input
+                                type="number"
+                                placeholder="Enter Newsletter ID to Load"
+                                min="1"
+                                onChange={(e) => e.target.value && fetchNewsletterById(e.target.value)}
+                                className={styles.input}
+                            />
+                            <div className={styles.divider}>- or -</div>
+                            <form onSubmit={generateDraft} className={styles.topicForm}>
+                                <input
+                                    type="text"
+                                    value={topic}
+                                    onChange={(e) => setTopic(e.target.value)}
+                                    placeholder="Enter newsletter topic"
+                                    className={styles.input}
+                                    required
+                                />
+                                <button 
+                                    type="submit" 
+                                    className={styles.button} 
+                                    disabled={isPolling}
+                                >
+                                    {isPolling ? 'Generating...' : 'Generate Draft'}
+                                </button>
+                            </form>
+                        </div>
+                    </section>
 
-                {jobId && (
-                    <div className={styles.jobIdDisplay}>
-                        <span>Newsletter Job ID: </span>
-                        <code>{jobId}</code>
-                        <button 
-                            className={styles.copyButton}
-                            onClick={() => {
-                                navigator.clipboard.writeText(jobId);
-                                alert('Job ID copied to clipboard!');
-                            }}
-                        >
-                            Copy ID
-                        </button>
-                    </div>
-                )}
-
-                {isPolling && (
-                    <div className={styles.loadingMessage}>
-                        Processing request... This may take a minute or two.
-                    </div>
-                )}
+                    {jobId && (
+                        <section className={styles.section}>
+                            <div className={styles.jobIdDisplay}>
+                                <span>Newsletter ID: </span>
+                                <code>{jobId}</code>
+                                <button 
+                                    className={styles.copyButton}
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(jobId);
+                                        alert('Job ID copied to clipboard!');
+                                    }}
+                                >
+                                    Copy ID
+                                </button>
+                            </div>
+                        </section>
+                    )}
+                </div>
 
                 {newsletterHtml && (
                     <>
-                        <div className={styles.previewContainer}>
-                            <h3>Newsletter Preview</h3>
-                            <div 
-                                className={styles.preview}
-                                dangerouslySetInnerHTML={{ __html: newsletterHtml }}
-                            />
-                        </div>
-
-                        <div className={styles.editContainer}>
-                            <h3>HTML Editor</h3>
-                            <textarea
-                                value={newsletterHtml}
-                                onChange={(e) => setNewsletterHtml(e.target.value)}
-                                className={styles.htmlEditor}
-                            />
-                        </div>
-
-                        <form onSubmit={submitFeedback} className={styles.feedbackForm}>
-                            <textarea
-                                value={feedback}
-                                onChange={(e) => setFeedback(e.target.value)}
-                                placeholder="Enter feedback for refinement"
-                                className={styles.feedbackInput}
-                            />
-                            <button 
-                                type="submit" 
-                                className={styles.button} 
-                                disabled={isPolling}
-                            >
-                                {isPolling ? 'Processing...' : 'Submit Feedback'}
-                            </button>
-                        </form>
-
-                        <div className={styles.actions}>
-                            <button 
-                                onClick={finalizeNewsletter}
-                                disabled={isFinalized}
-                                className={styles.button}
-                            >
-                                {isFinalized ? 'Newsletter Finalized' : 'Finalize Newsletter'}
-                            </button>
-
-                            {isFinalized && (
-                                <div className={styles.sendControls}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={testMode}
-                                            onChange={(e) => setTestMode(e.target.checked)}
-                                        />
-                                        Test Mode
-                                    </label>
-                                    <textarea
-                                        value={overrideEmails}
-                                        onChange={(e) => setOverrideEmails(e.target.value)}
-                                        placeholder="Optional: Override recipient emails (comma-separated)"
-                                        className={styles.emailOverride}
-                                    />
-                                    <button 
-                                        onClick={sendNewsletter} 
-                                        className={styles.button}
-                                        disabled={isSending}
-                                    >
-                                        {isSending ? 'Sending...' : 'Send Newsletter'}
-                                    </button>
+                        <div className={styles.mainContent}>
+                            <section className={styles.section}>
+                                <h2>Newsletter Preview</h2>
+                                <div className={styles.previewContainer}>
+                                    <NewsletterPreview html={newsletterHtml} />
                                 </div>
+                            </section>
+
+                            <section className={styles.section}>
+                                <h2>HTML Editor</h2>
+                                <textarea
+                                    value={newsletterHtml}
+                                    onChange={(e) => setNewsletterHtml(e.target.value)}
+                                    className={styles.htmlEditor}
+                                />
+                            </section>
+                        </div>
+
+                        <div className={styles.bottomControls}>
+                            {!isFinalized && (
+                                <section className={styles.section}>
+                                    <h2>Feedback</h2>
+                                    <form onSubmit={submitFeedback} className={styles.feedbackForm}>
+                                        <textarea
+                                            value={feedback}
+                                            onChange={(e) => setFeedback(e.target.value)}
+                                            placeholder="Enter feedback for refinement"
+                                            className={styles.textarea}
+                                        />
+                                        <button 
+                                            type="submit" 
+                                            className={styles.button} 
+                                            disabled={isPolling}
+                                        >
+                                            {isPolling ? 'Processing...' : 'Submit Feedback'}
+                                        </button>
+                                    </form>
+                                </section>
                             )}
+
+                            <section className={styles.section}>
+                                <div className={styles.actions}>
+                                    <button 
+                                        onClick={finalizeNewsletter}
+                                        disabled={isFinalized}
+                                        className={styles.button}
+                                    >
+                                        {isFinalized ? 'Newsletter Finalized' : 'Finalize Newsletter'}
+                                    </button>
+
+                                    {isFinalized && (
+                                        <div className={styles.sendControls}>
+                                            <label className={styles.testModeLabel}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={testMode}
+                                                    onChange={(e) => setTestMode(e.target.checked)}
+                                                />
+                                                Test Mode
+                                            </label>
+                                            <textarea
+                                                value={overrideEmails}
+                                                onChange={(e) => setOverrideEmails(e.target.value)}
+                                                placeholder="Optional: Override recipient emails (comma-separated)"
+                                                className={styles.textarea}
+                                            />
+                                            <button 
+                                                onClick={sendNewsletter} 
+                                                className={styles.button}
+                                                disabled={isSending}
+                                            >
+                                                {isSending ? 'Sending...' : 'Send Newsletter'}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
                         </div>
                     </>
                 )}
-            </div>
+            </main>
         </div>
     );
 }
