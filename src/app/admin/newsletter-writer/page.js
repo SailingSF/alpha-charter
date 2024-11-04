@@ -18,6 +18,7 @@ export default function AdminNewsletter() {
     const [newsletterId, setNewsletterId] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [overrideEmails, setOverrideEmails] = useState('');
+    const [newsletterVersion, setNewsletterVersion] = useState('trading_volume');
 
     // Replace the token state with this:
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
@@ -115,7 +116,10 @@ export default function AdminNewsletter() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({ topic }),
+                body: JSON.stringify({ 
+                    topic,
+                    newsletter_version: newsletterVersion 
+                }),
             });
             
             if (!response.ok) throw new Error('Failed to generate draft');
@@ -289,6 +293,14 @@ export default function AdminNewsletter() {
                                     className={styles.input}
                                     required
                                 />
+                                <select
+                                    value={newsletterVersion}
+                                    onChange={(e) => setNewsletterVersion(e.target.value)}
+                                    className={styles.input}
+                                >
+                                    <option value="trading_volume">Trading Volume</option>
+                                    <option value="deep_dive">Deep Dive</option>
+                                </select>
                                 <button 
                                     type="submit" 
                                     className={styles.button} 
