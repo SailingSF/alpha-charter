@@ -211,4 +211,30 @@ select.input {
     border: 1px solid #ccc;
     min-width: 150px;
 }
+
+.finalizeControls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.titleInput {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.titleInput label {
+    min-width: 100px;
+    font-weight: 500;
+}
+
+.titleInput input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
   

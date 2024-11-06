@@ -19,6 +19,7 @@ export default function AdminNewsletter() {
     const [isSending, setIsSending] = useState(false);
     const [overrideEmails, setOverrideEmails] = useState('');
     const [newsletterVersion, setNewsletterVersion] = useState('trading_volume');
+    const [newsletterTitle, setNewsletterTitle] = useState('');
 
     // Replace the token state with this:
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
@@ -69,7 +70,7 @@ export default function AdminNewsletter() {
         }
     };
 
-    // Update the pollJobStatus function to store the job_id
+    // Update the pollJobStatus function to store the job_id and set the newsletter title
     const pollJobStatus = async (jobId) => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/newsletter/draft/?job_id=${jobId}`, {
@@ -88,8 +89,11 @@ export default function AdminNewsletter() {
                 setPollingInterval(null);
                 setNewsletterHtml(data.content);
                 setIsPolling(false);
-                // Don't clear jobId when complete, keep it for reference
-                setNewsletterId(jobId); // Use the job_id as newsletter_id
+                // Set the newsletter title from the response
+                if (data.newsletter_title) {
+                    setNewsletterTitle(data.newsletter_title);
+                }
+                setNewsletterId(jobId);
             } else if (data.status === 'failed') {
                 clearInterval(pollingInterval);
                 setPollingInterval(null);
@@ -187,7 +191,7 @@ export default function AdminNewsletter() {
         }
     };
 
-    // Update finalizeNewsletter function to handle HTML content
+    // Update finalizeNewsletter function to handle HTML content and include the title
     const finalizeNewsletter = async () => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/newsletter/finalize/`, {
@@ -198,7 +202,8 @@ export default function AdminNewsletter() {
                 },
                 body: JSON.stringify({ 
                     job_id: jobId,
-                    html_content: newsletterHtml 
+                    html_content: newsletterHtml,
+                    newsletter_title: newsletterTitle
                 }),
             });
             
@@ -207,7 +212,6 @@ export default function AdminNewsletter() {
             const data = await response.json();
             setNewsletterId(data.newsletter_id);
             setIsFinalized(true);
-            // Show success message
             setError('Newsletter finalized successfully!');
         } catch (err) {
             setError('Finalization failed: ' + err.message);
@@ -375,13 +379,27 @@ export default function AdminNewsletter() {
 
                             <section className={styles.section}>
                                 <div className={styles.actions}>
-                                    <button 
-                                        onClick={finalizeNewsletter}
-                                        disabled={isFinalized}
-                                        className={styles.button}
-                                    >
-                                        {isFinalized ? 'Newsletter Finalized' : 'Finalize Newsletter'}
-                                    </button>
+                                    {!isFinalized && (
+                                        <div className={styles.finalizeControls}>
+                                            <div className={styles.titleInput}>
+                                                <label htmlFor="newsletterTitle">Title/Subject:</label>
+                                                <input
+                                                    id="newsletterTitle"
+                                                    type="text"
+                                                    value={newsletterTitle}
+                                                    onChange={(e) => setNewsletterTitle(e.target.value)}
+                                                    className={styles.input}
+                                                    placeholder="Enter newsletter title"
+                                                />
+                                            </div>
+                                            <button 
+                                                onClick={finalizeNewsletter}
+                                                className={styles.button}
+                                            >
+                                                Finalize Newsletter
+                                            </button>
+                                        </div>
+                                    )}
 
                                     {isFinalized && (
                                         <div className={styles.sendControls}>
