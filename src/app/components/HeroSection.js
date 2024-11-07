@@ -9,10 +9,10 @@ export default function HeroSection() {
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                <span className="block">Welcome to</span>
-                <span className="block text-blue-400">Alpha Charter</span>
+                <span className="block font-light">Welcome to</span>
+                <span className="block text-blue-400 tracking-wide">Alpha Charter</span>
               </h1>
-              <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-light leading-relaxed">
                 Your personal gateway to expert financial insights. Get ahead with our AI-powered newsletter that delivers market analysis and answers your financial questions.
               </p>
             </div>
