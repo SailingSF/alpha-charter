@@ -1,8 +1,34 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
 export default function HeroSection() {
+  const [svgPath, setSvgPath] = useState('');
+
+  useEffect(() => {
+    fetch('/sp500_path.txt')
+      .then((response) => response.text())
+      .then((data) => {
+        setSvgPath(data);
+      });
+  }, []);
+
   return (
-    <div className="relative overflow-hidden pb-16">
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20 mix-blend-multiply" />
+    <div className="relative pb-16">
+      {/* Background SVG with animated path */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-full max-w-4xl h-[400px]">
+          <svg
+            viewBox="0 0 100 100"
+            className="w-full h-full scale-y-[-1]"
+            preserveAspectRatio="none"
+          >
+            <path
+              d={svgPath}
+              className="stroke-emerald-400 stroke-[0.4] fill-none animate-drawLineInfinite opacity-30"
+            />
+          </svg>
+        </div>
       </div>
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 pt-12 pb-4 lg:max-w-2xl lg:w-full">

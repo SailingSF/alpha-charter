@@ -32,7 +32,7 @@ export default function NewsletterSignup() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-blue-400/10">
+      <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-blue-400/10">
         <div className="px-6 py-12 sm:px-12 lg:px-16">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">

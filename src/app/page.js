@@ -7,9 +7,13 @@ import FeatureSection from './components/FeatureSection';
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0f1116]">
-      <HeroSection />
-      <NewsletterSignup />
-      <FeatureSection />
+      <div className="relative bg-gradient-to-b from-black to-gray-900">
+        <div className="relative pb-24">
+          <HeroSection />
+          <NewsletterSignup />
+        </div>
+        <FeatureSection />
+      </div>
     </div>
   );
 }

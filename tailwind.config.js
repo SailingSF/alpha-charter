@@ -14,6 +14,20 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-outfit)'],
       },
+      keyframes: {
+        drawLineInfinite: {
+          '0%': {
+            strokeDasharray: '1000',
+            strokeDashoffset: '1000'
+          },
+          '100%': {
+            strokeDashoffset: '0'
+          }
+        }
+      },
+      animation: {
+        drawLineInfinite: 'drawLineInfinite 10s linear infinite'
+      }
     },
   },
   plugins: [],
