@@ -7,7 +7,7 @@ import NewsletterPreview from '@/app/components/NewsletterPreview';
 
 export default function AdminNewsletter() {
     const [topic, setTopic] = useState('');
-    const [newsletterHtml, setNewsletterHtml] = useState('');
+    const [newsletterContent, setNewsletterContent] = useState('');
     const [feedback, setFeedback] = useState('');
     const [isFinalized, setIsFinalized] = useState(false);
     const [testMode, setTestMode] = useState(true);
@@ -20,6 +20,7 @@ export default function AdminNewsletter() {
     const [overrideEmails, setOverrideEmails] = useState('');
     const [newsletterVersion, setNewsletterVersion] = useState('trading_volume');
     const [newsletterTitle, setNewsletterTitle] = useState('');
+    const [isMarkdownContent, setIsMarkdownContent] = useState(true);
 
     // Replace the token state with this:
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
@@ -37,10 +38,11 @@ export default function AdminNewsletter() {
             
             if (response.ok) {
                 const data = await response.json();
-                setNewsletterHtml(data.content);
+                setNewsletterContent(data.content);
+                setIsMarkdownContent(false); // It's HTML content
                 setNewsletterId(data.id);
                 setTopic(data.title);
-                setIsFinalized(true); // It's a finalized newsletter
+                setIsFinalized(true);
                 setError('');
                 return;
             }
@@ -56,7 +58,8 @@ export default function AdminNewsletter() {
             
             const draftData = await draftResponse.json();
             if (draftData.status === 'completed') {
-                setNewsletterHtml(draftData.content);
+                setNewsletterContent(draftData.content);
+                setIsMarkdownContent(true); // It's markdown content
                 setJobId(draftData.job_id);
                 setTopic(draftData.topic);
                 setIsFinalized(false);
@@ -87,9 +90,9 @@ export default function AdminNewsletter() {
             if (data.status === 'completed') {
                 clearInterval(pollingInterval);
                 setPollingInterval(null);
-                setNewsletterHtml(data.content);
+                setNewsletterContent(data.content);
+                setIsMarkdownContent(true);
                 setIsPolling(false);
-                // Set the newsletter title from the response
                 if (data.newsletter_title) {
                     setNewsletterTitle(data.newsletter_title);
                 }
@@ -202,7 +205,7 @@ export default function AdminNewsletter() {
                 },
                 body: JSON.stringify({ 
                     job_id: jobId,
-                    html_content: newsletterHtml,
+                    newsletter_content: newsletterContent,
                     newsletter_title: newsletterTitle
                 }),
             });
@@ -212,6 +215,8 @@ export default function AdminNewsletter() {
             const data = await response.json();
             setNewsletterId(data.newsletter_id);
             setIsFinalized(true);
+            setNewsletterContent(data.html_content);
+            setIsMarkdownContent(false);
             setError('Newsletter finalized successfully!');
         } catch (err) {
             setError('Finalization failed: ' + err.message);
@@ -335,102 +340,94 @@ export default function AdminNewsletter() {
                     )}
                 </div>
 
-                {newsletterHtml && (
-                    <>
-                        <div className={styles.mainContent}>
-                            <section className={styles.section}>
-                                <h2>Newsletter Preview</h2>
-                                <div className={styles.previewContainer}>
-                                    <NewsletterPreview html={newsletterHtml} />
-                                </div>
-                            </section>
-
-                            <section className={styles.section}>
-                                <h2>HTML Editor</h2>
-                                <textarea
-                                    value={newsletterHtml}
-                                    onChange={(e) => setNewsletterHtml(e.target.value)}
-                                    className={styles.htmlEditor}
+                {newsletterContent && (
+                    <div className={styles.mainContent}>
+                        <section className={styles.section}>
+                            <h2>Newsletter Preview</h2>
+                            <div className={styles.previewContainer}>
+                                <NewsletterPreview 
+                                    content={newsletterContent}
+                                    isMarkdown={isMarkdownContent} 
                                 />
-                            </section>
-                        </div>
+                            </div>
+                        </section>
+                    </div>
+                )}
 
-                        <div className={styles.bottomControls}>
+                <div className={styles.bottomControls}>
+                    {!isFinalized && (
+                        <section className={styles.section}>
+                            <h2>Feedback</h2>
+                            <form onSubmit={submitFeedback} className={styles.feedbackForm}>
+                                <textarea
+                                    value={feedback}
+                                    onChange={(e) => setFeedback(e.target.value)}
+                                    placeholder="Enter feedback for refinement"
+                                    className={styles.textarea}
+                                />
+                                <button 
+                                    type="submit" 
+                                    className={styles.button} 
+                                    disabled={isPolling}
+                                >
+                                    {isPolling ? 'Processing...' : 'Submit Feedback'}
+                                </button>
+                            </form>
+                        </section>
+                    )}
+
+                    <section className={styles.section}>
+                        <div className={styles.actions}>
                             {!isFinalized && (
-                                <section className={styles.section}>
-                                    <h2>Feedback</h2>
-                                    <form onSubmit={submitFeedback} className={styles.feedbackForm}>
-                                        <textarea
-                                            value={feedback}
-                                            onChange={(e) => setFeedback(e.target.value)}
-                                            placeholder="Enter feedback for refinement"
-                                            className={styles.textarea}
+                                <div className={styles.finalizeControls}>
+                                    <div className={styles.titleInput}>
+                                        <label htmlFor="newsletterTitle">Title/Subject:</label>
+                                        <input
+                                            id="newsletterTitle"
+                                            type="text"
+                                            value={newsletterTitle}
+                                            onChange={(e) => setNewsletterTitle(e.target.value)}
+                                            className={styles.input}
+                                            placeholder="Enter newsletter title"
                                         />
-                                        <button 
-                                            type="submit" 
-                                            className={styles.button} 
-                                            disabled={isPolling}
-                                        >
-                                            {isPolling ? 'Processing...' : 'Submit Feedback'}
-                                        </button>
-                                    </form>
-                                </section>
+                                    </div>
+                                    <button 
+                                        onClick={finalizeNewsletter}
+                                        className={styles.button}
+                                    >
+                                        Finalize Newsletter
+                                    </button>
+                                </div>
                             )}
 
-                            <section className={styles.section}>
-                                <div className={styles.actions}>
-                                    {!isFinalized && (
-                                        <div className={styles.finalizeControls}>
-                                            <div className={styles.titleInput}>
-                                                <label htmlFor="newsletterTitle">Title/Subject:</label>
-                                                <input
-                                                    id="newsletterTitle"
-                                                    type="text"
-                                                    value={newsletterTitle}
-                                                    onChange={(e) => setNewsletterTitle(e.target.value)}
-                                                    className={styles.input}
-                                                    placeholder="Enter newsletter title"
-                                                />
-                                            </div>
-                                            <button 
-                                                onClick={finalizeNewsletter}
-                                                className={styles.button}
-                                            >
-                                                Finalize Newsletter
-                                            </button>
-                                        </div>
-                                    )}
-
-                                    {isFinalized && (
-                                        <div className={styles.sendControls}>
-                                            <label className={styles.testModeLabel}>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={testMode}
-                                                    onChange={(e) => setTestMode(e.target.checked)}
-                                                />
-                                                Test Mode
-                                            </label>
-                                            <textarea
-                                                value={overrideEmails}
-                                                onChange={(e) => setOverrideEmails(e.target.value)}
-                                                placeholder="Optional: Override recipient emails (comma-separated)"
-                                                className={styles.textarea}
-                                            />
-                                            <button 
-                                                onClick={sendNewsletter} 
-                                                className={styles.button}
-                                                disabled={isSending}
-                                            >
-                                                {isSending ? 'Sending...' : 'Send Newsletter'}
-                                            </button>
-                                        </div>
-                                    )}
+                            {isFinalized && (
+                                <div className={styles.sendControls}>
+                                    <label className={styles.testModeLabel}>
+                                        <input
+                                            type="checkbox"
+                                            checked={testMode}
+                                            onChange={(e) => setTestMode(e.target.checked)}
+                                        />
+                                        Test Mode
+                                    </label>
+                                    <textarea
+                                        value={overrideEmails}
+                                        onChange={(e) => setOverrideEmails(e.target.value)}
+                                        placeholder="Optional: Override recipient emails (comma-separated)"
+                                        className={styles.textarea}
+                                    />
+                                    <button 
+                                        onClick={sendNewsletter} 
+                                        className={styles.button}
+                                        disabled={isSending}
+                                    >
+                                        {isSending ? 'Sending...' : 'Send Newsletter'}
+                                    </button>
                                 </div>
-                            </section>
+                            )}
                         </div>
-                    </>
-                )}
+                    </section>
+                </div>
             </main>
         </div>
     );
