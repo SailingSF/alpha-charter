@@ -19,3 +19,59 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.track {
+  clip-path: inset(0 var(--x2) 0 var(--x1));
+  transition: --x1 0.2s ease-out, --x2 0.2s ease-out 0.1s;
+}
+
+@property --x1 {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
+@property --x2 {
+  syntax: '<percentage>';
+  initial-value: 89%;
+  inherits: false;
+}
+
+@supports not (background: paint(something)) {
+  .track {
+    transition: clip-path 0.3s ease;
+  }
+}
+
+/* Enhanced transitions */
+.tabs-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.tabs-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.tabs-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tabs-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+/* Smooth page transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.page-transition {
+  animation: fadeIn 0.3s ease-out;
+}

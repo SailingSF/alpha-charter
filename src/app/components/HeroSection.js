@@ -14,9 +14,9 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="relative pb-16">
+    <div className="relative pb-16 -mt-20">
       {/* Background SVG with animated path */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center z-10">
         <div className="w-full max-w-4xl h-[400px]">
           <svg
             viewBox="0 0 100 100"
@@ -31,7 +31,7 @@ export default function HeroSection() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pt-12 pb-4 lg:max-w-2xl lg:w-full">
+        <div className="relative z-20 pt-32 pb-4 lg:max-w-2xl lg:w-full">
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
