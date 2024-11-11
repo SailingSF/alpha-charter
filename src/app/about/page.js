@@ -55,7 +55,7 @@ export default function About() {
               <div className="space-y-6 order-1 md:order-2">
                 <h2 className="text-3xl font-bold text-blue-400">Human-AI Collaboration</h2>
                 <p className="text-gray-300 text-lg font-light">
-                  Every newsletter is crafted by Max with the assistance of specialized AI agents. This unique approach combines:
+                  Every newsletter is crafted by a human with the assistance of specialized AI agents. This approach combines:
                 </p>
                 <div className="space-y-4">
                   <div className="p-4 bg-[#0f1116] rounded-lg border border-gray-800">

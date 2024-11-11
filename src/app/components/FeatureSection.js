@@ -10,7 +10,7 @@ export default function FeatureSection() {
           </div>
           <h3 className="mt-6 text-lg font-medium text-white text-center">AI-Powered Analysis</h3>
           <p className="mt-2 text-base text-gray-400 text-center">
-            Get personalized market insights powered by advanced AI technology.
+            Get data powered market insights made accessible by AI technology.
           </p>
         </div>
 
@@ -20,9 +20,9 @@ export default function FeatureSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
           </div>
-          <h3 className="mt-6 text-lg font-medium text-white text-center">Interactive Q&A</h3>
+          <h3 className="mt-6 text-lg font-medium text-white text-center">Interactive Responses</h3>
           <p className="mt-2 text-base text-gray-400 text-center">
-            Ask questions by replying to the newsletter and receive detailed responses about market trends and investments with sophisticated AI using data tools.
+            To explore topics deeper or to get more context, ask questions by replying directly to the newsletter in email and receive detailed responses with context andsophisticated AI using data tools.
           </p>
         </div>
 
@@ -32,9 +32,9 @@ export default function FeatureSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
-          <h3 className="mt-6 text-lg font-medium text-white text-center">Custom Strategies</h3>
+          <h3 className="mt-6 text-lg font-medium text-white text-center">Data Visualizations</h3>
           <p className="mt-2 text-base text-gray-400 text-center">
-            Receive tailored investment ideas based on your interests and goals.
+            Visualize the market data both in the newsletter and in the responses to your questions making finance easier to understand.
           </p>
         </div>
       </div>

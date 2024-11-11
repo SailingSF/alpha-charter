@@ -39,7 +39,7 @@ export default function HeroSection() {
                 <span className="block text-blue-400 tracking-wide">Alpha Charter</span>
               </h1>
               <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 font-light leading-relaxed">
-                Your personal gateway to expert financial insights. Get ahead with our AI-powered newsletter that delivers market analysis and answers your financial questions.
+                The only newsletter that is a two way street allowing the reader to interact with and get more context and insights. Get ahead with our AI-powered financial newsletter that delivers market analysis and answers your questions.
               </p>
             </div>
           </main>
