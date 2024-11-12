@@ -277,22 +277,29 @@ export default function AdminNewsletter() {
 
             <main className={styles.container}>
                 <div className={styles.header}>
-                    <h1>Newsletter Management</h1>
+                    <h1>Newsletter Creator</h1>
                     {error && <div className={styles.error}>{error}</div>}
                 </div>
 
-                <div className={styles.topControls}>
+                <div className={styles.workflowContainer}>
+                    {/* Step 1: Create New or Load Existing */}
                     <section className={styles.section}>
-                        <h2>Load or Create Newsletter</h2>
-                        <div className={styles.newsletterSelect}>
-                            <input
-                                type="number"
-                                placeholder="Enter Newsletter ID to Load"
-                                min="1"
-                                onChange={(e) => e.target.value && fetchNewsletterById(e.target.value)}
-                                className={styles.input}
-                            />
-                            <div className={styles.divider}>- or -</div>
+                        <h2>1. Create or Load Newsletter</h2>
+                        <div className={styles.createLoadContainer}>
+                            <div className={styles.loadNewsletter}>
+                                <input
+                                    type="number"
+                                    placeholder="Load Newsletter by ID"
+                                    min="1"
+                                    onChange={(e) => e.target.value && fetchNewsletterById(e.target.value)}
+                                    className={styles.input}
+                                />
+                            </div>
+                            <div className={styles.dividerContainer}>
+                                <div className={styles.dividerLine}></div>
+                                <span className={styles.dividerText}>or create new</span>
+                                <div className={styles.dividerLine}></div>
+                            </div>
                             <form onSubmit={generateDraft} className={styles.topicForm}>
                                 <input
                                     type="text"
@@ -312,7 +319,7 @@ export default function AdminNewsletter() {
                                 </select>
                                 <button 
                                     type="submit" 
-                                    className={styles.button} 
+                                    className={`${styles.button} ${styles.primaryButton}`}
                                     disabled={isPolling}
                                 >
                                     {isPolling ? 'Generating...' : 'Generate Draft'}
@@ -321,112 +328,111 @@ export default function AdminNewsletter() {
                         </div>
                     </section>
 
+                    {/* Newsletter ID Display */}
                     {jobId && (
-                        <section className={styles.section}>
-                            <div className={styles.jobIdDisplay}>
-                                <span>Newsletter ID: </span>
-                                <code>{jobId}</code>
-                                <button 
-                                    className={styles.copyButton}
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(jobId);
-                                        alert('Job ID copied to clipboard!');
-                                    }}
-                                >
-                                    Copy ID
-                                </button>
-                            </div>
-                        </section>
+                        <div className={styles.idBadge}>
+                            Newsletter ID: <code>{jobId}</code>
+                            <button 
+                                className={styles.copyButton}
+                                onClick={() => {
+                                    navigator.clipboard.writeText(jobId);
+                                    alert('Newsletter ID copied!');
+                                }}
+                            >
+                                Copy ID
+                            </button>
+                        </div>
                     )}
-                </div>
 
-                {newsletterContent && (
-                    <div className={styles.mainContent}>
+                    {/* Step 2: Preview and Refine */}
+                    {newsletterContent && (
                         <section className={styles.section}>
-                            <h2>Newsletter Preview</h2>
+                            <h2>2. Preview and Refine</h2>
                             <div className={styles.previewContainer}>
                                 <NewsletterPreview 
                                     content={newsletterContent}
                                     isMarkdown={isMarkdownContent} 
                                 />
                             </div>
-                        </section>
-                    </div>
-                )}
-
-                <div className={styles.bottomControls}>
-                    {!isFinalized && (
-                        <section className={styles.section}>
-                            <h2>Feedback</h2>
-                            <form onSubmit={submitFeedback} className={styles.feedbackForm}>
-                                <textarea
-                                    value={feedback}
-                                    onChange={(e) => setFeedback(e.target.value)}
-                                    placeholder="Enter feedback for refinement"
-                                    className={styles.textarea}
-                                />
-                                <button 
-                                    type="submit" 
-                                    className={styles.button} 
-                                    disabled={isPolling}
-                                >
-                                    {isPolling ? 'Processing...' : 'Submit Feedback'}
-                                </button>
-                            </form>
+                            
+                            {!isFinalized && (
+                                <div className={styles.feedbackContainer}>
+                                    <form onSubmit={submitFeedback} className={styles.feedbackForm}>
+                                        <textarea
+                                            value={feedback}
+                                            onChange={(e) => setFeedback(e.target.value)}
+                                            placeholder="Enter feedback to refine the newsletter..."
+                                            className={styles.textarea}
+                                            rows={4}
+                                        />
+                                        <button 
+                                            type="submit" 
+                                            className={`${styles.button} ${styles.secondaryButton}`}
+                                            disabled={isPolling}
+                                        >
+                                            {isPolling ? 'Processing...' : 'Submit Feedback'}
+                                        </button>
+                                    </form>
+                                </div>
+                            )}
                         </section>
                     )}
 
-                    <section className={styles.section}>
-                        <div className={styles.actions}>
-                            {!isFinalized && (
-                                <div className={styles.finalizeControls}>
-                                    <div className={styles.titleInput}>
-                                        <label htmlFor="newsletterTitle">Title/Subject:</label>
-                                        <input
-                                            id="newsletterTitle"
-                                            type="text"
-                                            value={newsletterTitle}
-                                            onChange={(e) => setNewsletterTitle(e.target.value)}
-                                            className={styles.input}
-                                            placeholder="Enter newsletter title"
-                                        />
+                    {/* Step 3: Finalize and Send */}
+                    {newsletterContent && (
+                        <section className={styles.section}>
+                            <h2>3. {isFinalized ? 'Send Newsletter' : 'Finalize Newsletter'}</h2>
+                            <div className={styles.actions}>
+                                {!isFinalized ? (
+                                    <div className={styles.finalizeContainer}>
+                                        <div className={styles.titleInput}>
+                                            <input
+                                                type="text"
+                                                value={newsletterTitle}
+                                                onChange={(e) => setNewsletterTitle(e.target.value)}
+                                                className={styles.input}
+                                                placeholder="Enter newsletter title/subject"
+                                            />
+                                        </div>
+                                        <button 
+                                            onClick={finalizeNewsletter}
+                                            className={`${styles.button} ${styles.primaryButton}`}
+                                            disabled={!newsletterTitle}
+                                        >
+                                            Finalize Newsletter
+                                        </button>
                                     </div>
-                                    <button 
-                                        onClick={finalizeNewsletter}
-                                        className={styles.button}
-                                    >
-                                        Finalize Newsletter
-                                    </button>
-                                </div>
-                            )}
-
-                            {isFinalized && (
-                                <div className={styles.sendControls}>
-                                    <label className={styles.testModeLabel}>
-                                        <input
-                                            type="checkbox"
-                                            checked={testMode}
-                                            onChange={(e) => setTestMode(e.target.checked)}
-                                        />
-                                        Test Mode
-                                    </label>
-                                    <textarea
-                                        value={overrideEmails}
-                                        onChange={(e) => setOverrideEmails(e.target.value)}
-                                        placeholder="Optional: Override recipient emails (comma-separated)"
-                                        className={styles.textarea}
-                                    />
-                                    <button 
-                                        onClick={sendNewsletter} 
-                                        className={styles.button}
-                                        disabled={isSending}
-                                    >
-                                        {isSending ? 'Sending...' : 'Send Newsletter'}
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    </section>
+                                ) : (
+                                    <div className={styles.sendContainer}>
+                                        <div className={styles.sendOptions}>
+                                            <label className={styles.testModeLabel}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={testMode}
+                                                    onChange={(e) => setTestMode(e.target.checked)}
+                                                />
+                                                Test Mode
+                                            </label>
+                                            <textarea
+                                                value={overrideEmails}
+                                                onChange={(e) => setOverrideEmails(e.target.value)}
+                                                placeholder="Optional: Override recipient emails (comma-separated)"
+                                                className={styles.textarea}
+                                                rows={2}
+                                            />
+                                        </div>
+                                        <button 
+                                            onClick={sendNewsletter} 
+                                            className={`${styles.button} ${styles.primaryButton}`}
+                                            disabled={isSending}
+                                        >
+                                            {isSending ? 'Sending...' : `Send Newsletter ${testMode ? '(Test)' : ''}`}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </main>
         </div>

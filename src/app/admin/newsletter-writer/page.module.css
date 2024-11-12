@@ -4,29 +4,31 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    color: #ffffff;
 }
 
 .navbar {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
     padding: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     display: flex;
     gap: 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
     margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navLink {
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
 }
 
 .navLink:hover {
-    color: #0070f3;
+    color: #3b82f6;
 }
 
 .container {
@@ -56,13 +58,14 @@
 }
 
 .section {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     margin-bottom: 1.5rem;
     width: 100%;
     min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .section h2 {
@@ -72,31 +75,37 @@
     color: #333;
 }
 
-.input {
+.input, .textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
+    color: white;
     margin-bottom: 1rem;
 }
 
+.input::placeholder, .textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .button {
-    background-color: #0070f3;
+    background-color: #2563eb;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
-    border-radius: 4px;
+    border-radius: 0.375rem;
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s;
 }
 
 .button:hover:not(:disabled) {
-    background-color: #0051b3;
+    background-color: #1d4ed8;
 }
 
 .button:disabled {
-    background-color: #ccc;
+    background-color: rgba(255, 255, 255, 0.2);
     cursor: not-allowed;
 }
 
@@ -104,16 +113,6 @@
     text-align: center;
     margin: 1rem 0;
     color: #666;
-}
-
-.textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    resize: vertical;
 }
 
 .htmlEditor {
@@ -130,17 +129,18 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: #f8f9fa;
+    background: rgba(255, 255, 255, 0.05);
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: 0.375rem;
 }
 
 .copyButton {
     padding: 0.25rem 0.5rem;
-    background: #e9ecef;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
     cursor: pointer;
+    color: white;
 }
 
 .testModeLabel {
@@ -151,10 +151,10 @@
 }
 
 .error {
-    background-color: #fee;
-    color: #c00;
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
     padding: 0.75rem;
-    border-radius: 4px;
+    border-radius: 0.375rem;
     margin-bottom: 1rem;
 }
 
@@ -206,10 +206,30 @@ main.container {
 }
 
 select.input {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    padding: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
+    color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
     min-width: 150px;
+    cursor: pointer;
+}
+
+select.input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+select.input option {
+    background-color: #1f2937;
+    color: white;
+    padding: 0.5rem;
 }
 
 .finalizeControls {
@@ -236,5 +256,126 @@ select.input {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
+}
+
+.workflowContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.createLoadContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dividerContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.dividerLine {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dividerText {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    padding: 0 0.5rem;
+}
+
+.idBadge {
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.button {
+    min-width: 120px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.primaryButton {
+    background-color: #2563eb;
+}
+
+.secondaryButton {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.feedbackContainer {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}
+
+.finalizeContainer,
+.sendContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sendOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.testModeLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.section h2 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.previewContainer {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.topicForm {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .topicForm {
+        grid-template-columns: 1fr;
+    }
+    
+    .button {
+        width: 100%;
+    }
 }
   

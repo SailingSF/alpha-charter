@@ -1,25 +1,127 @@
 .preview {
-    width: 100%;
-    height: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.6;
     padding: 1rem;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow-y: auto;
 }
 
-.preview img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 1em auto;
+.heading1 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem;
+    line-height: 1.2;
+}
+
+.heading2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    line-height: 1.3;
+}
+
+.heading3 {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.25rem 0 0.75rem;
+    line-height: 1.4;
+}
+
+.paragraph {
+    margin: 1rem 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.link {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #93c5fd;
+    text-decoration: underline;
+}
+
+.list {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.listItem {
+    margin: 0.5rem 0;
+}
+
+.blockquote {
+    border-left: 4px solid #3b82f6;
+    margin: 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 0.25rem;
+}
+
+.code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.codeBlock {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    font-family: monospace;
+    font-size: 0.9em;
 }
 
 .imageError {
-    padding: 1em;
-    margin: 1em 0;
-    background: #fff3f3;
-    border: 1px solid #ffcdd2;
-    color: #d32f2f;
-    border-radius: 4px;
+    color: #ef4444;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+/* Style for tables if they appear in the content */
+.preview table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.preview th,
+.preview td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.preview th {
+    background: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+}
+
+/* Style for horizontal rules */
+.preview hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 2rem 0;
+}
+
+/* Style for images */
+.preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
 } 
