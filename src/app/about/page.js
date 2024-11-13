@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function About() {
   return (
@@ -43,14 +44,28 @@ export default function About() {
                 </ul>
               </div>
               <div className="bg-[#0f1116] rounded-xl p-6 border border-gray-800">
-                <div className="aspect-video bg-gray-800/50 rounded-lg"></div>
+                <Image
+                  src="/newsletter_sample.png"
+                  alt="Interactive Newsletter Example"
+                  width={600}
+                  height={400}
+                  className="rounded-lg w-full h-auto"
+                  priority
+                />
               </div>
             </div>
 
             {/* AI Agents Section */}
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="bg-[#0f1116] rounded-xl p-6 border border-gray-800 order-2 md:order-1">
-                <div className="aspect-video bg-gray-800/50 rounded-lg"></div>
+                <Image
+                  src="/agents_examples.png"
+                  alt="AI Agents Workflow Diagram"
+                  width={600}
+                  height={400}
+                  className="rounded-lg w-full h-auto"
+                  priority
+                />
               </div>
               <div className="space-y-6 order-1 md:order-2">
                 <h2 className="text-3xl font-bold text-blue-400">Human-AI Collaboration</h2>

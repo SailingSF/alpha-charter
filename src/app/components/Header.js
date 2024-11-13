@@ -12,7 +12,7 @@ export default function Header() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const tabs = [
-    { name: 'All', href: '/' },
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Archive', href: '/archive' }
   ];
